@@ -2,6 +2,7 @@ package com.ecommerce.microcommerce.web.controller;
 
 import com.ecommerce.microcommerce.dao.ProductDao;
 import com.ecommerce.microcommerce.model.Product;
+import com.ecommerce.microcommerce.web.exceptions.ProduitGratuitException;
 import com.ecommerce.microcommerce.web.exceptions.ProduitIntrouvableException;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -26,14 +27,11 @@ import java.util.*;
 @RestController
 public class ProductController {
 
-    @Autowired
-    private ProductDao productDao;
-
     private static Map<Integer, Product> productList = new HashMap<Integer, Product>() {
         {
-            put(1, new Product(1, "Ordinateur portable", 350, 230));
-            put(2, new Product(2, "Aspirateur Robot", 500, 300));
-            put(3, new Product(3, "Table de Ping Pong", 750, 350));
+            put(0, new Product(0, "Ordinateur portable", 350, 230));
+            put(1, new Product(1, "Aspirateur Robot", 500, 300));
+            put(2, new Product(2, "Table de Ping Pong", 750, 350));
         }
     };
 
@@ -52,21 +50,17 @@ public class ProductController {
     }
 
     //ajouter un produit
-    @PostMapping(value = "/Produits")
-    public ResponseEntity<Void> ajouterProduit(@Valid @RequestBody Product product) {
+    @GetMapping(value = "/ajoutProduit/{nom}/{prix}/{prixA}")
+    public void ajouterProduit(@PathVariable String nom, @PathVariable int prix, @PathVariable int prixA) {
+        int pS = productList.size() + 1;
+        if(prix == 0){
+            throw new ProduitGratuitException("Le produit ne peux pas être gratuit !!!");
+        }else{
+            Product p = new Product(pS, nom, prix, prixA);
+            productList.put(pS, p);
+        }
 
-        Product productAdded =  productDao.save(product);
 
-        if (productAdded == null)
-            return ResponseEntity.noContent().build();
-
-        URI location = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(productAdded.getId())
-                .toUri();
-
-        return ResponseEntity.created(location).build();
     }
 
     // supprimer un produit
@@ -97,10 +91,10 @@ public class ProductController {
 
 
     //Pour les tests
-    @GetMapping(value = "test/produits/{prix}")
+    /*@GetMapping(value = "test/produits/{prix}")
     public List<Product>  testeDeRequetes(@PathVariable int prix) {
         return productDao.chercherUnProduitCher(400);
-    }
+    }*/
 
         @GetMapping(value = "/margProduit/{id}")
     public int calculerMargeProduit(@PathVariable int id){
