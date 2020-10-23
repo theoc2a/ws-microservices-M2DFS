@@ -20,10 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.Map;
-
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 
 @RestController
@@ -113,6 +110,13 @@ public class ProductController {
         int marge = pProduct - paProduct;
 
         return marge;
+    }
+
+    @GetMapping(value = "/trieProduit")
+    public List<Product> trierProduitsParOrdreAlphabetique(){
+        List<Product> p = new ArrayList<Product>(productList.values());
+        p.sort(Comparator.comparing(Product::getNom));
+        return p;
     }
 
 }
