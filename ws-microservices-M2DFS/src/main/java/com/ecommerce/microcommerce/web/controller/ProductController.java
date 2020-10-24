@@ -36,6 +36,7 @@ public class ProductController {
     };
 
     //Récupérer la liste des produits
+    @ApiOperation(value = "Get la liste des produits", response = Iterable.class, tags = "listeProduits/")
     @GetMapping(value = "/Produits")
     public Map<Integer, Product> listeProduits() {
         return productList;
@@ -43,6 +44,7 @@ public class ProductController {
 
 
     //Récupérer un produit par son Id
+    @ApiOperation(value = "Get un produit de la liste", response = Iterable.class, tags = "afficherUnProduit/")
     @GetMapping(value = "/afficherUnProduit/{id}")
     public Product afficherUnProduit(@PathVariable int id) {
         Product product = productList.get(id);
@@ -50,6 +52,7 @@ public class ProductController {
     }
 
     //ajouter un produit
+    @ApiOperation(value = "Get un ajout de produit dans la liste", response = Iterable.class, tags = "ajoutProduit/")
     @GetMapping(value = "/ajoutProduit/{nom}/{prix}/{prixA}")
     public String ajouterProduit(@PathVariable String nom, @PathVariable int prix, @PathVariable int prixA) {
         int pS = productList.size() + 1;
@@ -65,6 +68,7 @@ public class ProductController {
     }
 
     // supprimer un produit
+    @ApiOperation(value = "Get une suppression d'un produit dans la liste", response = Iterable.class, tags = "supprimerProduit/")
     @GetMapping(value = "/supprimerUnProduit/{id}")
     public String supprimerProduit(@PathVariable int id) {
         productList.remove(id);
@@ -72,6 +76,7 @@ public class ProductController {
     }
 
     // Mettre à jour un produit
+    @ApiOperation(value = "Get une modif d'un produit dans la liste", response = Iterable.class, tags = "modifUnProduit/")
     @GetMapping(value = "/modifUnProduit/{id}/{type}/}{valeur}")
     public void updateProduit(@PathVariable int id, @PathVariable int type, @PathVariable String valeur) {
         Product product = productList.get(id);
@@ -97,7 +102,7 @@ public class ProductController {
     public List<Product>  testeDeRequetes(@PathVariable int prix) {
         return productDao.chercherUnProduitCher(400);
     }*/
-
+    @ApiOperation(value = "Get une marge d'un produit dans la liste", response = Iterable.class, tags = "margProduit/")
         @GetMapping(value = "/margProduit/{id}")
     public int calculerMargeProduit(@PathVariable int id){
         Product product = productList.get(id);
@@ -108,6 +113,7 @@ public class ProductController {
         return marge;
     }
 
+    @ApiOperation(value = "Get un trie des produits de la liste", response = Iterable.class, tags = "trieProduit/")
     @GetMapping(value = "/trieProduit")
     public List<Product> trierProduitsParOrdreAlphabetique(){
         List<Product> p = new ArrayList<Product>(productList.values());
