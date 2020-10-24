@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/circuitbreaker/pom.xml" />
         <option value="$PROJECT_DIR$/ws-microservices-M2DFS/pom.xml" />
+        <option value="$PROJECT_DIR$/Eureka/pom.xml" />
       </list>
     </option>
   </component>

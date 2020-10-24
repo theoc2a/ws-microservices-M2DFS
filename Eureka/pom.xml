@@ -8,10 +8,10 @@
 		<version>2.3.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ecommerce.circuitbreaker</groupId>
-	<artifactId>circuitbreaker</artifactId>
+	<groupId>com.EurekaServer</groupId>
+	<artifactId>Eureka</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>circuitbreaker</name>
+	<name>Eureka</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -21,12 +21,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
 
 		<dependency>
@@ -40,10 +36,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
@@ -54,6 +46,11 @@
 				<version>${spring-cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-server</artifactId>
+				<version>1.5.7</version>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
