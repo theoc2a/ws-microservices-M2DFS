@@ -51,13 +51,14 @@ public class ProductController {
 
     //ajouter un produit
     @GetMapping(value = "/ajoutProduit/{nom}/{prix}/{prixA}")
-    public void ajouterProduit(@PathVariable String nom, @PathVariable int prix, @PathVariable int prixA) {
+    public String ajouterProduit(@PathVariable String nom, @PathVariable int prix, @PathVariable int prixA) {
         int pS = productList.size() + 1;
         if(prix == 0){
-            throw new ProduitGratuitException("Le produit ne peux pas être gratuit !!!");
+            return "Vendre gratuit est impossible";
         }else{
             Product p = new Product(pS, nom, prix, prixA);
             productList.put(pS, p);
+            return "Bravo ajout réussi";
         }
 
 
@@ -65,8 +66,9 @@ public class ProductController {
 
     // supprimer un produit
     @GetMapping(value = "/supprimerUnProduit/{id}")
-    public void supprimerProduit(@PathVariable int id) {
+    public String supprimerProduit(@PathVariable int id) {
         productList.remove(id);
+        return "La suppressions est effectué";
     }
 
     // Mettre à jour un produit
